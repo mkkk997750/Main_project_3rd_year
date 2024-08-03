@@ -6,11 +6,17 @@ import Display from "./components/Display";
 import Modal from "./components/Modal";
 import "./App.css";
 
+
 function App() {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [data, setData]= useState("");
+
+  const setDataFunc= (imageData) =>{
+    setData(imageData);
+  }
 
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -46,30 +52,49 @@ function App() {
   }, []);
   return (
     <>
-      {!modalOpen && (
-        <button className="share" onClick={() => setModalOpen(true)}>
-          Share
-        </button>
-      )}
-      {modalOpen && (
+          {modalOpen && (
         <Modal setModalOpen={setModalOpen} contract={contract}></Modal>
       )}
 
       <div className="App">
-        <h1 style={{ color: "white" }}>Gdrive 3.0</h1>
-        <div class="bg"></div>
-        <div class="bg bg2"></div>
-        <div class="bg bg3"></div>
+        <div className="left_box">
+          <div className="left_up">
+          <h1 style={{ color: "white", justifyContent: 'left' }}>Secure BIO</h1>
+          </div>
+          <div className="left_down">
+              <div className="image_box"> 
+                  {data === ""? <div className="image">
+                      <p >No Image Uploaded</p>
+                    </div>: <div className="image_box">{data}</div>}
+              </div>
+          </div>
+        </div>
 
-        <p style={{ color: "white" }}>
-          Account : {account ? account : "Not connected"}
-        </p>
-        <FileUpload
-          account={account}
-          provider={provider}
-          contract={contract}
-        ></FileUpload>
-        <Display contract={contract} account={account}></Display>
+
+        <div className="right_box">
+          <div className="right_up">
+
+            <div class="bg"></div>
+            <div class="bg bg2"></div>
+            <div class="bg bg3"></div>
+
+
+            <FileUpload
+              account={account}
+              provider={provider}
+              contract={contract}
+            ></FileUpload>
+         
+            <Display contract={contract} setDataFunc={setDataFunc} account={account}></Display>
+          </div>
+          <div className="right_down">
+            <p style={{ color: "white" }}>
+              Account : {account ? account : "Not connected"}
+            </p>
+          </div>
+          
+        </div>
+
       </div>
     </>
   );

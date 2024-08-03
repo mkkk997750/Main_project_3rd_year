@@ -1,5 +1,61 @@
 .App {
   text-align: center;
+  display: flex;
+  height: 100%;
+  height: 100vh;
+}
+
+.right_box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 35%;
+  justify-self: center;
+  border: 2px solid white;
+  /* align-self: flex-end; */
+}
+
+.image_box {
+  border: 4px solid white;
+  height: 500px;
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(0, 0, 0, 0.61); */
+  backdrop-filter: blur(100px);
+  color: black;
+}
+
+.image{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.left_down {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.left_box {
+  height: 100%;
+  position: relative;
+  width: 65%;
+  flex: 4;
+  justify-self: center;
+  /* align-self: flex-end; */
+}
+
+.App h1 {
+  text-align: left;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .App-logo {
@@ -32,10 +88,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 html {
   height: 100%;
 }
@@ -46,7 +104,7 @@ body {
 
 .bg {
   animation: slide 3s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+  background-image: linear-gradient(-60deg, #000000 50%, #3f3f3f 50%);
   bottom: 0;
   left: -50%;
   opacity: 0.5;
@@ -54,6 +112,8 @@ body {
   right: -50%;
   top: 0;
   z-index: -1;
+  /* border: 5px solid red; */
+  overflow: hidden;
 }
 
 .bg2 {
@@ -86,6 +146,7 @@ h1 {
   0% {
     transform: translateX(-25%);
   }
+
   100% {
     transform: translateX(25%);
   }
@@ -96,9 +157,11 @@ h1 {
   margin: 0;
   box-sizing: border-box;
 }
+
 body {
-  height: 900px;
+  height: 100vh;
 }
+
 header {
   text-align: center;
   width: 100%;
@@ -109,6 +172,7 @@ header {
   overflow: hidden;
   border-radius: 0 0 85% 85% / 30%;
 }
+
 header .overlay {
   width: 100%;
   height: 100%;
@@ -124,11 +188,29 @@ h1 {
   margin-bottom: 30px;
 }
 
-h3,
+.right_up {
+  margin-top: 100px;
+  height: 80%;
+  align-content: center;
+}
+
+.right_down {
+  display: flex;
+  height: 20%;
+}
+
 p {
   font-family: "Open Sans", sans-serif;
   margin-bottom: 30px;
+  align-self: last baseline;
 }
+
+h3 {
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 30px;
+}
+
+
 .share {
   padding: 16px;
   margin-top: 10px;

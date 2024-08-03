@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Display.css";
-const Display = ({ contract, account }) => {
+
+const Display = ({ contract, account, setDataFunc }) => {
   const [data, setData] = useState("");
+
   const getdata = async () => {
     let dataArray;
-    const Otheraddress = document.querySelector(".address").value;
+    const OtheraddressElement = document.querySelector(".address");
+    const Otheraddress = OtheraddressElement ? OtheraddressElement.value : "";
+        
     try {
       if (Otheraddress) {
         dataArray = await contract.display(Otheraddress);
@@ -23,35 +27,71 @@ const Display = ({ contract, account }) => {
       const str_array = str.split(",");
       console.log(str);
       console.log(str_array);
-      const images = str_array.map((item, i) => {
-        return (
-          <a href={item} key={i} target="_blank" rel="noreferrer">
-            <img
-              key={i}
-              src={`https://turquoise-initial-haddock-152.mypinata.cloud/ipfs/${item.substring(58)}`}
-              alt="new"
-              className="image-list"
-            ></img>
-          </a>
-        );
-      });
       
-      setData(images);
+      const newestItem = str_array[str_array.length - 1];
+      
+      console.log(newestItem);
+      const image = (
+        <div className="left_down">
+        <a href={newestItem} target="_blank" rel="noreferrer">
+          <img
+            src={`https://turquoise-initial-haddock-152.mypinata.cloud/ipfs/${newestItem.substring(58)}`}
+            alt="new"
+            className="image_box"
+          />
+        </a>
+        </div>
+      );
+    
+      console.log(image);
+      setData(image);
+      setDataFunc(image);
     } else {
       alert("No image to display");
     }
+    
   };
+
+
+  const [output, setOutput] = useState('');
+
+  const runPythonScript = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/run-python-script', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ script: 'code.py' }),
+      });
+      const data = await response.json();
+      console.log(data.output+" "+data.output.length)
+      // setOutput( (data.output.length == 227) ? data.output.substring(218) : data.output.substring(199));
+      setOutput(data.output);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  useEffect(() => {
+    console.log("output is: ", output);
+  }, [output]);
+
   return (
     <>
-      <div className="image-list">{data}</div>
-      <input
-        type="text"
-        placeholder="Enter Address"
-        className="address"
-      ></input>
+      {/* <div className="image_box">{data}</div> */}
       <button className="center button" onClick={getdata}>
         Get Data
       </button>
+
+      <button className="center button" onClick={runPythonScript}>
+        Get Classification
+      </button>
+
+      <p style={{ color: "white" }}>
+        {output}
+      </p>
     </>
   );
 };
